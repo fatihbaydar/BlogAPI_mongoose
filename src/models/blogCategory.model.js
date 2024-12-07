@@ -37,7 +37,7 @@ const BlogCategorySchema = new mongoose.Schema({
         required: true
     }
 }, {
-    collection: "BlogCategories", // collection ismi
+    collection: "blogCategories", // collection ismi
     timestamps: true
 })
 
