@@ -8,7 +8,7 @@ const mongoose = require("mongoose");
 const BlogPostSchema = new mongoose.Schema({
     name: {
         categoryId: {
-            type: mongoose.Schema.Types.ObjectId(),
+            type: mongoose.Schema.Types.ObjectId,
             ref: "BlogCategory", // diğer tablo ile ilişkilendirme
             required: true
         },

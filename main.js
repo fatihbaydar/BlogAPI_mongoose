@@ -17,14 +17,11 @@ require("./src/config/dbConnection")() // bu bir fonksiyon olduğu için çağr�
 //! Veritabanına sınıf ile bağlanma
 // require("./src/config/dbConnection") // sınıfın kendisi fonskiyonu çağırdığı için burada tekrar çağırmaya gerek yok
 
+app.use("/blog/category", require("./src/routes/blogCategory.router"));
+app.use("/blog/post", require("./src/routes/blogPost.router"));
 app.all("/", (req, res) => {
-  res.send("Blog API");
+  res.send("BLOG API");
 });
-
-/* ------------------------------------------------------- */
-//! Routes
-
-/* ------------------------------------------------------- */
 
 app.use("*", (req, res) => {
   res.status(404).send({ isError: true, message: "Yol bulunamadı" });

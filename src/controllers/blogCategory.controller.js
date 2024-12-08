@@ -49,7 +49,7 @@ module.exports.blogCategory = {
     },
 
     delete: async (req, res) => {
-        const result = await this.BlogCategory.deleteOne({ _id: req.params.categoryId })
+        const result = await BlogCategory.deleteOne({ _id: req.params.categoryId })
         res.send({
             result
         })
