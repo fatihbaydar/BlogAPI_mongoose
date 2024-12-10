@@ -11,7 +11,23 @@ const UserSchema = new mongoose.Schema(
             trim: true,
             unique: true,
             required: [true, "Email zorunlu"], // required: true da olur
-        },
+            //! 1.yöntem
+            // validate:(email) => {
+                // return email.includes("@") && email.includes(".") 
+            // }
+            //! 2.yöntem
+            // validate:(email) => email.includes("@") && email.includes(".") 
+            //! 3.yöntem
+            //  validate: [(email) => {
+            //     return email.includes("@") && email.includes(".")
+            //  }, "Email hatalı"]
+            //! 4.yöntem
+             validate:{
+                validator:(email) => {
+                return email.includes("@") && email.includes(".")   
+                }, message:"Email hatalı"
+             }
+            },
 
         password: {
             type: String,

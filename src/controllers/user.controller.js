@@ -2,7 +2,7 @@
 
 // Call Models:
 const { User } = require("../models/user.model");
-const { NotFoundError } = require("../errors/customError");
+const { NotFoundError, BadRequestError } = require("../errors/customError");
 
 module.exports.user = {
     list: async (req, res) => {
@@ -35,19 +35,25 @@ module.exports.user = {
     },
 
     update: async (req, res) => {
+        if (req.body?.email) {
+            const email = await User.findOne({ email: req.body.email })
+            if (email) {
+                throw new BadRequestError("Bu email kullanımda")
+            }
+        }
         const result = await User.updateOne(
             { _id: req.params.userId },
-            req.body
+            req.body, { runValidators: true }
         );
 
         //!güncellenmek istenen veri yoksa
         if (result.matchedCount === 0) {
-          throw new NotFoundError("Eşleşen veri bulunamadı");
-        // return res.status(404).send("Eşleşen veri bulunamadı");
+            throw new NotFoundError("Eşleşen veri bulunamadı");
+            // return res.status(404).send("Eşleşen veri bulunamadı");
         }
         //! güncellenmek istenen veri var ama zaten güncel olduğu için güncelleme yapılmadı:
         if (result.matchedCount > 0 && result.modifiedCount === 0) {
-          return res.status(200).send({ message: "Belge zaten güncel." });
+            return res.status(200).send({ message: "Belge zaten güncel." });
         }
         res.status(202).send({
             isError: false,
