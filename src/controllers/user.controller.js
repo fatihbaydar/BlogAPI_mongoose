@@ -3,6 +3,7 @@
 // Call Models:
 const { User } = require("../models/user.model");
 const { NotFoundError, BadRequestError } = require("../errors/customError");
+const passwordEncrypt = require("../helpers/passwordEncrypt");
 
 module.exports.user = {
     list: async (req, res) => {
@@ -16,6 +17,9 @@ module.exports.user = {
     //? CRUD ->
 
     create: async (req, res) => {
+        if(!req.body.password|| req.body.password.length<8)
+            throw new BadRequestError("şifre en az 8 karakter olmalı")
+        // req.body.password = passwordEncrypt(req.body.password)
         const result = await User.create(req.body);
 
         res.send({

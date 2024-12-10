@@ -13,7 +13,7 @@ const UserSchema = new mongoose.Schema(
             required: [true, "Email zorunlu"], // required: true da olur
             //! 1.yöntem
             // validate:(email) => {
-                // return email.includes("@") && email.includes(".") 
+            // return email.includes("@") && email.includes(".") 
             // }
             //! 2.yöntem
             // validate:(email) => email.includes("@") && email.includes(".") 
@@ -22,18 +22,48 @@ const UserSchema = new mongoose.Schema(
             //     return email.includes("@") && email.includes(".")
             //  }, "Email hatalı"]
             //! 4.yöntem
-             validate:{
-                validator:(email) => {
-                return email.includes("@") && email.includes(".")   
-                }, message:"Email hatalı"
-             }
-            },
+            validate: {
+                validator: (email) => {
+                    return email.includes("@") && email.includes(".")
+                }, message: "Email hatalı"
+            }
+            //! 5. yöntem
+            // validate: [
+            //   function (email) {
+            //     console.log("this", this);
+            //     return email.includes("@") && email.includes(".");
+            //   },
+            //   "Email hatalı",
+            // ],
+        },
 
         password: {
             type: String,
             trim: true,
             required: [true, "Şifre zorunlu"], // required: true da olur
-            set: (password) => passwordEncrypt(password)
+            set: (password) => passwordEncrypt(password),
+            //set:paswordEncypt
+            // validate: [
+            //   function (password) {
+
+            //     console.log(password);
+            //     if (password.length < 8) return false;
+            //     else {
+            //       const hash= paswordEncypt(password)
+            //       this.password=hashed
+            //       return true};
+            //   },
+            //   "Email format is incorrect",
+            // ],
+            // validate: [
+            //   function (password) {
+
+            //     console.log(password);
+            //     if (password.length < 8) return false;
+            //     else return true;
+            //   },
+            //   "Email format is incorrect",
+            // ],
         },
         firstName: String,
         lastName: String
