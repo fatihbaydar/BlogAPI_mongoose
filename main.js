@@ -20,6 +20,7 @@ require("./src/config/dbConnection")() // bu bir fonksiyon olduğu için çağr�
 app.use("/blog/category", require("./src/routes/blogCategory.router"));
 app.use("/blog/post", require("./src/routes/blogPost.router"));
 app.use("/user", require("./src/routes/user.router"))
+app.use("/auth", require("./src/routes/auth.router")) // login ve logout
 app.all("/", (req, res) => {
   res.send("BLOG API");
 });
