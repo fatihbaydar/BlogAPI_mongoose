@@ -20,11 +20,35 @@ require("./src/config/dbConnection")() // bu bir fonksiyon olduğu için çağr�
 /* ------------------------------------------------------- */
 //? SESSION && COOKIES
 
-const session = require("cookie-session")
+const session = require("cookie-session");
 app.use(session({
-  secret:process.env.SECRET_KEY, // cookie verisini şifreleme anahtarı
-  maxAge:1000 * 60 * 60 * 24 * 3, // 3 gün demek
-})) 
+  secret: process.env.SECRET_KEY, // cookie verisini şifreleme anahtarı
+  maxAge: 1000 * 60 * 60 * 24 * 3, // 3 gün demek
+}))
+
+/* ------------------------------------------------------- */
+//? Sessiondaki verilerin kontrolü
+
+const { User } = require("./src/models/user.model");
+app.use(async (req, res, next) => {
+  console.log("session:", req.session)
+  // login olan user verisini buraya kaydedeceğiz
+  req.user = null
+ 
+  if (req.session?._id) {
+    const { _id, password } = req.session
+    const user = await User.findOne({ _id })
+    if (user && user.password == password) {
+      // Login başarılı
+      // Session içindeki login datası başarılı ise user verisini req.user'a ata
+      req.user = user
+    } else {
+      // Hatalı session veerileri varsa session verilerini sil.
+      req.session = null
+    }
+  }
+  next()
+})
 
 /* ------------------------------------------------------- */
 
@@ -34,9 +58,9 @@ app.use("/user", require("./src/routes/user.router"))
 app.use("/auth", require("./src/routes/auth.router")) // login ve logout
 app.all("/", (req, res) => {
   // res.send("BLOG API");
-  console.log("session:", req.session)
   res.send({
-    message:"BLOG API",
+    message: "BLOG API",
+    user:req.user,
     session: req.session
   })
 });

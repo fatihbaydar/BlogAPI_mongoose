@@ -18,13 +18,20 @@ module.exports = {
                     /*  SESSION */
                     // req.session = {
                     //     email: user.email,
-                        // password: user.password
+                    // password: user.password
                     // }
                     // req.session.email = user.email 
-                    req.session._id = user._id 
-                    req.session.password = user.password 
-
+                    req.session._id = user._id
+                    req.session.password = user.password
                     /*  SESSION */
+
+                    /* COOKIE */
+                    // Beni Hatırla
+                    if (req.body?.remindMe) {
+                        req.session.remindMe = true,
+                            req.sessionOptions.maxAge = 1000 * 60 * 60 * 24 * 3 // 3 gün hatırla
+                    }
+                    /* COOKIE */
 
 
                     res.status(200).send({
@@ -48,6 +55,10 @@ module.exports = {
     },
 
     logout: async (req, res) => {
-        res.send("logout")
+        req.session = null // session cookie verilerini silmek için null eşitlemek yeterli
+        res.status(200).send({
+            error: false,
+            message: "Çıkış başarılı"
+        })
     },
 }
