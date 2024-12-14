@@ -17,12 +17,28 @@ require("./src/config/dbConnection")() // bu bir fonksiyon olduğu için çağr�
 //! Veritabanına sınıf ile bağlanma
 // require("./src/config/dbConnection") // sınıfın kendisi fonskiyonu çağırdığı için burada tekrar çağırmaya gerek yok
 
+/* ------------------------------------------------------- */
+//? SESSION && COOKIES
+
+const session = require("cookie-session")
+app.use(session({
+  secret:process.env.SECRET_KEY, // cookie verisini şifreleme anahtarı
+  maxAge:1000 * 60 * 60 * 24 * 3, // 3 gün demek
+})) 
+
+/* ------------------------------------------------------- */
+
 app.use("/blog/category", require("./src/routes/blogCategory.router"));
 app.use("/blog/post", require("./src/routes/blogPost.router"));
 app.use("/user", require("./src/routes/user.router"))
 app.use("/auth", require("./src/routes/auth.router")) // login ve logout
 app.all("/", (req, res) => {
-  res.send("BLOG API");
+  // res.send("BLOG API");
+  console.log("session:", req.session)
+  res.send({
+    message:"BLOG API",
+    session: req.session
+  })
 });
 
 app.use("*", (req, res) => {
