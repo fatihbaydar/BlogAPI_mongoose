@@ -7,6 +7,11 @@ const mongoose = require("mongoose");
 //BlogPostSchema:
 const BlogPostSchema = new mongoose.Schema({
     name: {
+        userId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User", // diğer tablo ile ilişkilendirme
+            required: true
+        },
         categoryId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "BlogCategory", // diğer tablo ile ilişkilendirme
