@@ -41,7 +41,7 @@ app.all("/", (req, res) => {
   // res.send("BLOG API");
   res.send({
     message: "BLOG API",
-    user:req.user,
+    user: req.user,
     session: req.session
   })
 });
@@ -54,4 +54,9 @@ app.use("*", (req, res) => {
 app.use(require("./src/middlewares/errorHandler"));
 
 /* ------------------------------------------------------- */
+
 app.listen(PORT, () => console.log("Running: http://127.0.0.1:" + PORT));
+
+/* ------------------------------------------------------- */
+// Test verisi içindir. Bir kez çalıştırılır.
+// require("./sync")()

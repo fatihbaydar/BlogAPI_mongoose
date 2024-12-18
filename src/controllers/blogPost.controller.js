@@ -1,6 +1,6 @@
 "use strict";
 
-// Call Models:
+// Modelleri çağırma:
 const { BlogPost } = require("../models/blogPost.model");
 const { NotFoundError } = require("../errors/customError");
 
