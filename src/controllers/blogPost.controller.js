@@ -7,6 +7,8 @@ const { NotFoundError } = require("../errors/customError");
 module.exports.blogPost = {
     list: async (req, res) => {
 
+        const data = await res.getModelList(BlogPost, ["userId", "categoryId"])
+
         // //! FİLTRELEME - ARAMA - SIRALAMA - SAYFALAMA 
 
         // // console.log(req.query)

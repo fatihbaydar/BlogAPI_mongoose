@@ -42,7 +42,7 @@ module.exports = async (req, res, next) => {
     // const data = await BlogPost.find().populate("categoryId")
     // const data = await BlogPost.find({ ...filter, ...search }).sort(sort).limit(limit).skip(skip).populate(["userId", "categoryId"])
 
-    res.getModelList = async function (Model, populate) {
+    res.getModelList = async function (Model, populate = null) {
         return await Model.find({ ...filter, ...search }).sort(sort).limit(limit).skip(skip).populate(populate)
     }
     next()

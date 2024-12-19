@@ -7,8 +7,11 @@ const { BlogCategory } = require("../models/blogCategory.model")
 
 module.exports.blogCategory = {
     list: async (req, res) => {
-        const data = await BlogCategory.find()
+        // const data = await BlogCategory.find()
         /* const data = await BlogCategory.find({}) */ //yukardaki ile aynı
+
+        const data = await res.getModelList(BlogCategory)
+        
         res.send({
             result: data
         })
