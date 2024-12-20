@@ -11,8 +11,9 @@ module.exports.blogCategory = {
         /* const data = await BlogCategory.find({}) */ //yukardaki ile aynı
 
         const data = await res.getModelList(BlogCategory)
-        
+
         res.send({
+            details: await res.getModelListDetails(BlogCategory),
             result: data
         })
     },

@@ -53,6 +53,7 @@ module.exports.blogPost = {
         // Fİltreleme ... başlığı ile başlayan kısımdan buraya kadar olan yer findSearchSortPage.js'e taşındı.
 
         res.send({
+            details: await res.getModelListDetails(BlogPost),
             result: data,
         });
     },
